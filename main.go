@@ -3,7 +3,7 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"os"
 	"os/exec"
 	"syscall"
@@ -16,7 +16,7 @@ func main() {
 	case "child":
 		child()
 	default:
-		panic("what should I do")
+		panic("wat should I do")
 	}
 }
 
@@ -30,7 +30,7 @@ func parent() {
 	cmd.Stderr = os.Stderr
 
 	if err := cmd.Run(); err != nil {
-		log.Println("ERROR", err)
+		fmt.Println("ERROR", err)
 		os.Exit(1)
 	}
 }
@@ -40,13 +40,14 @@ func child() {
 	must(os.MkdirAll("rootfs/oldrootfs", 0700))
 	must(syscall.PivotRoot("rootfs", "rootfs/oldrootfs"))
 	must(os.Chdir("/"))
+
 	cmd := exec.Command(os.Args[2], os.Args[3:]...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
 	if err := cmd.Run(); err != nil {
-		log.Println("ERROR", err)
+		fmt.Println("ERROR", err)
 		os.Exit(1)
 	}
 }
