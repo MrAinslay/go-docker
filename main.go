@@ -16,7 +16,7 @@ func main() {
 	case "child":
 		child()
 	default:
-		panic("wat should I do")
+		panic("what should I do")
 	}
 }
 
